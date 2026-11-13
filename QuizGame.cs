@@ -72,6 +72,8 @@ namespace CyberSecurityChatbotGUI
                 "A) A normal competition", "B) A likely scam", "C) A bank requirement", "D) Safe if the fee is small");
             Add("A password manager helps you use a unique password for every account.", "TRUE",
                 "It stores strong passwords so you don't have to remember them.");
+            Add("You should never click on links in emails from unknown senders.", "TRUE",
+                "Links can lead to phishing sites or malware downloads.");
         }
 
         public string Start()
