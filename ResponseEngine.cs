@@ -13,6 +13,7 @@ namespace CyberSecurityChatbotGUI
         private string _userName = "friend";
         private string? _favouriteTopic;   // memory
         private string? _currentTopic;     // conversation flow
+        public ActivityLog Log { get; } = new ActivityLog();
 
         private const string DefaultReply = "I'm not sure I understand. Can you try rephrasing?";
 
@@ -71,6 +72,8 @@ namespace CyberSecurityChatbotGUI
         {
             string text = input.Trim().ToLower();
             if (text.Length == 0) return DefaultReply;
+            if (text.Contains("activity log") || text.Contains("what have you done"))
+            return Log.Show(10);
 
             if (text.Contains("how are you"))
                 return "I'm doing great, thanks for asking! Ready to help you stay safe online.";
@@ -105,6 +108,7 @@ namespace CyberSecurityChatbotGUI
 
             if (_favouriteTopic == topic)
                 reply += $" As someone interested in {topic}, {_userName}, it's worth coming back to this often.";
+                Log.Add($"Recognised keyword '{topic}' and gave a tip");
 
             return reply;
         }
