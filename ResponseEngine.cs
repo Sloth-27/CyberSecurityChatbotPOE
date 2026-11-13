@@ -29,7 +29,8 @@ namespace CyberSecurityChatbotGUI
                 "Do not share your password with anyone, even if they claim to be from a trusted organisation.",
                 "Use strong, unique passwords for each account. Avoid personal details in them.",
                 "Longer is stronger: try a passphrase of four or more random words.",
-                "Use a password manager so you never have to reuse passwords."
+                "Use a password manager so you never have to reuse passwords.",
+                "Make sure to use password you can remember, but is hard for others to guess. Avoid using common words or phrases."
                 
             },
             ["phishing"] = new List<string>
