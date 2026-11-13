@@ -10,4 +10,7 @@
 <ItemGroup>
   <None Update="Assets\**" CopyToOutputDirectory="PreserveNewest" />
 </ItemGroup>
+<ItemGroup>
+  <PackageReference Include="MySqlConnector" Version="3.0.0" />
+</ItemGroup>
 </Project>
