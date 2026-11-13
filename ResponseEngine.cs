@@ -69,13 +69,23 @@ namespace CyberSecurityChatbotGUI
             ["frustrated"] = tip => $"I know this can be annoying, but you're not alone. Here's a simple tip: {tip}"
         };
 
+        // different ways of saying the same thing map to one topic
+        private readonly Dictionary<string, string> _synonyms = new()
+        {
+            ["pass word"] = "password", ["passcode"] = "password", ["login"] = "password", ["2fa"] = "password",
+            ["two-factor"] = "password", ["two factor"] = "password",
+            ["fake email"] = "phishing", ["suspicious email"] = "phishing", ["suspicious link"] = "phishing", ["spam"] = "phishing",
+            ["fraud"] = "scam", ["con "] = "scam", ["swindle"] = "scam", ["fake prize"] = "scam",
+            ["personal data"] = "privacy", ["personal information"] = "privacy", ["data protection"] = "privacy", ["tracking"] = "privacy"
+        };
+
         private readonly string[] _followUps = { "another", "more", "explain", "elaborate", "again", "don't understand" };
 
         public void SetUserName(string name) => _userName = name;
 
         public string Respond(string input)
         {
-            string text = input.Trim().ToLower();
+            string text = Normalise(input.Trim().ToLower());
             if (text.Length == 0) return DefaultReply;
             if (_quiz.IsActive)
             {
@@ -262,5 +272,16 @@ namespace CyberSecurityChatbotGUI
 
             return null;
         }
+        private string Normalise(string text)
+        {
+            foreach (var pair in _synonyms)
+            {
+                if (text.Contains(pair.Key) && !text.Contains(pair.Value))
+                    text += " " + pair.Value;
+                    
+            }
+            return text;
+        }
+        
     }
 }
