@@ -16,6 +16,7 @@ namespace CyberSecurityChatbotGUI
         private string? _currentTopic;     // conversation flow
         public ActivityLog Log { get; } = new ActivityLog();
         private  readonly  TaskManager _tasks = new TaskManager();
+        private readonly QuizGame _quiz = new QuizGame();
         private int? _pendingTaskId;
         private bool _awaitingTaskTitle;
 
@@ -76,6 +77,22 @@ namespace CyberSecurityChatbotGUI
         {
             string text = input.Trim().ToLower();
             if (text.Length == 0) return DefaultReply;
+            if (_quiz.IsActive)
+            {
+                string quizReply = _quiz.Answer(text);
+                if (!_quiz.IsActive)
+                    Log.Add($"Quiz finished - score {_quiz.Score}/{_quiz.Total}");
+                return quizReply;
+
+                
+            }
+
+            if (text.Contains("quiz") || text.Contains("play a game"))
+            {
+                Log.Add("Quiz started");
+                return _quiz.Start();
+            }
+            
             string? taskReply = HandleTasks(input.Trim(), text);
             if (taskReply != null) return taskReply;
             if (text.Contains("activity log") || text.Contains("what have you done"))
